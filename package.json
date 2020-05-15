@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/brochington/streamer-overlays#readme",
   "dependencies": {
+    "@brochington/horizon": "0.0.3",
+    "sanitize.css": "^11.0.0",
     "surge": "^0.21.3"
   }
 }
