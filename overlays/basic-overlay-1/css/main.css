@@ -1,0 +1,26 @@
+.container {
+  width: 1920px;
+  height: 1080px;
+  background: royalblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+section.top-section {
+
+}
+
+section.middle-section {
+
+}
+
+section.bottom-section {
+  position: relative;
+  left: 0px;
+  bottom: 0px;
+  height: 48px;
+  background-color: black;
+  color: white;
+  justify-self: flex-end;
+}

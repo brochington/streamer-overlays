@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "serve",
     "deploy": "surge --domain garrulous-war.surge.sh"
   },
   "repository": {
@@ -20,6 +21,10 @@
   "dependencies": {
     "@brochington/horizon": "0.0.3",
     "sanitize.css": "^11.0.0",
+    "serve": "^11.3.0",
     "surge": "^0.21.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.43.0"
   }
 }
