@@ -2,16 +2,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="/overlays/shared/css/sanitize.css">
+  <link rel="stylesheet" type="text/css" href="/overlays/basic-overlay-1/css/horizon-styles.css">
   <link rel="stylesheet" type="text/css" href="/overlays/basic-overlay-1/css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
   <title>Basic Overlay 1</title>
 </head>
 <body>
   <div class="container">
-    <!-- <section class="top-section">Top</section>
-    <section class="middle-section">Mid</section> -->
-    <section class="bottom-section">Hello</section>
+    <div class="overlay">
+      <div></div>
+      <div class="flex justify-end items-end">
+        <div id="social-info" class="pos-r m2">
+          <div id="twitter-info" class="pos-a h100 w100 row items-center ml3">
+            <img class="twitter-logo" src="/overlays/basic-overlay-1/img/Twitter_Logo_WhiteOnBlue.svg"></img>
+            <span class="twitter-handle">@brochington</span>
+          </div>
+          <canvas id="social-info-bgd" width="330px" height="80px"></canvas>
+        </div>
+      </div>
+      <div></div>
+      <div>
+        <canvas id="test-canvas" width="400px" height="320px"></canvas>
+      </div>
+    </div>
   </div>
+
+  <script type="module" src="/overlays/shared/js/rough.esm.js"></script>
   <script type="module" src="/overlays/basic-overlay-1/js/main.js"></script>
 </body>
 </html>
