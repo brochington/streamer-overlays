@@ -8,25 +8,40 @@
   <title>Basic Overlay 1</title>
 </head>
 <body>
-  <div class="container">
+  <div id="container" class="pos-r">
     <div class="overlay">
-      <div></div>
+      <div>
+        <!-- <div class="pos-a">
+          <button id="follow-btn">Follow!</button>
+        </div> -->
+      </div>
       <div class="flex justify-end items-end">
-        <div id="social-info" class="pos-r m2">
-          <div id="twitter-info" class="pos-a h100 w100 row items-center ml3">
+        <div id="social-info" class="pos-r m3">
+          <div id="twitter-info" class="pos-a h100 w100 row items-center p3">
             <img class="twitter-logo" src="/overlays/basic-overlay-1/img/Twitter_Logo_WhiteOnBlue.svg"></img>
             <span class="twitter-handle">@brochington</span>
           </div>
-          <canvas id="social-info-bgd" width="330px" height="80px"></canvas>
         </div>
       </div>
       <div></div>
-      <div>
-        <canvas id="test-canvas" width="400px" height="320px"></canvas>
+      <div id="video-container" class="pos-r">
       </div>
     </div>
+    <template id="follow-notification-template">
+      <div class="follow-notification">
+        <div class="bgd-container pos-a"></div>
+        <div class="pos-a flex-center h100 w100 white size-40 column">
+          <div>Thank you for following</div>
+          <div>
+            <span class="follower-name"></span>
+            <span>!!</span>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 
+  <!-- libs -->
   <script type="module" src="/overlays/shared/js/rough.esm.js"></script>
   <script type="module" src="/overlays/basic-overlay-1/js/main.js"></script>
 </body>

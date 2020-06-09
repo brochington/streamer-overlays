@@ -1,38 +1,125 @@
-import rough from '../../shared/js/rough.esm.js';
+import SquiggleBox from "./SquiggleBox.js";
+import { wait } from "./utils/general.js";
+import { randomColor } from './utils/color.js';
 
-const testCanvas = document.getElementById('test-canvas');
-const videoRC = rough.canvas(testCanvas);
-const ctx = testCanvas.getContext('2d');
+const container = document.getElementById("container");
+const followNotificationTmpl = document.getElementById(
+  "follow-notification-template"
+);
 
-const socialHandleCanvas = document.getElementById("social-info-bgd");
-const socialRC = rough.canvas(socialHandleCanvas);
-const socialCTX = socialHandleCanvas.getContext('2d');
+let boxes = []; // functions;
 
-function render() {
-  // Video squiggles
-  ctx.clearRect(0, 0, 800, 600);
-  videoRC.rectangle(10, 10, 375, 295, {
-    // stroke: 'teal',
-    stroke: "white",
-    strokeWidth: 5,
-    roughness: 4,
+function startWSServer() {
+  const ws = new WebSocket("ws://lit-beach-71712.herokuapp.com");
+  // const ws = new WebSocket("ws://localhost:9123");
+
+  ws.addEventListener("open", () => {
+    ws.send("Hello from the client!");
   });
 
+  ws.addEventListener("message", (event) => {
+    console.log("message from server:", event);
 
-  // Twitter squiggles
-  socialCTX.clearRect(0, 0, 330, 80);
-  socialRC.rectangle(4, 4, 322, 72, {
-    stroke: "white",
-    strokeWidth: 1.2,
-    fill: "#1DA1F2",
-    // fillStyle: "solid",
-    fillStyle: "zigzag",
-    fillWeight: 3,
+    try {
+      const { type, data } = JSON.parse(event.data);
+  
+      switch (type) {
+        case 'connection':
+          console.log('backend is connected');
+          break;
+        case 'follow': 
+          console.log('got new follower!!', data)
+          queueFollowerNotification(data);
+          break;
+        default:
+          break;
+      }
+    } catch (err) {
+      // swallow this for now.
+    }
+
   });
 
-  window.setTimeout(() => {
-    window.requestAnimationFrame(render);
-  }, 200)
+  return ws;
 }
 
-render();
+let followQueue = [];
+
+async function notifyOfFollower(name) {
+  const tmpl = followNotificationTmpl.content.cloneNode(true);
+  const notification = tmpl.querySelector(".follow-notification");
+  const bgdContainer = tmpl.querySelector(
+    ".follow-notification .bgd-container"
+  );
+  const follower = tmpl.querySelector(".follower-name");
+
+  follower.textContent = name;
+
+  const bgdBox = new SquiggleBox(500, 250, bgdContainer)
+    .fill(randomColor())
+    .fillWeight(17)
+    .padding(20)
+    .stroke(randomColor())
+    .start();
+
+  boxes.push(bgdBox);
+
+  notification.style.opacity = 0;
+
+  container.appendChild(tmpl);
+
+  await wait(1);
+  notification.style.opacity = 1;
+
+  await wait(2001);
+  notification.style.opacity = 0;
+
+  await wait(2001);
+  notification.remove();
+
+  boxes = boxes.filter((b) => b !== bgdBox);
+}
+
+async function processQueue() {
+  await notifyOfFollower(followQueue[0]);
+  followQueue.shift();
+  if (followQueue.length > 0) {
+    processQueue();
+  }
+}
+
+function queueFollowerNotification(newFollowers) {
+  newFollowers.forEach(follower => {
+    followQueue.push(follower.from_name);
+  })
+
+  if (followQueue.length === 1) {
+    processQueue();
+  }
+}
+
+(function main() {
+  const ws = startWSServer();
+
+  const videoBox = new SquiggleBox(
+    375,
+    295,
+    document.getElementById("video-container")
+  ).start();
+
+  boxes.push(videoBox);
+
+  const twitterBox = new SquiggleBox(
+    330,
+    80,
+    document.getElementById("social-info")
+  )
+    .padding(10)
+    .strokeWidth(2)
+    .fill("#1DA1F2")
+    .fillStyle("zigzag")
+    .fillWeight(7)
+    .start();
+
+  boxes.push(twitterBox);
+})();

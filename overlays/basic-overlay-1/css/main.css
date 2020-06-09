@@ -1,4 +1,4 @@
-.container {
+#container {
   width: 1920px;
   height: 1080px;
   /* background-image: url('https://picsum.photos/1920/1080'); */
@@ -46,6 +46,18 @@
   width: 50px;
 }
 
-#social-info .twitter-handle {
+/* #social-info .twitter-handle {
 
+} */
+
+.follow-notification {
+  position: absolute;
+  width: 500px;
+  height: 250px;
+  left: 710px;
+  top: 100px;
+  /* border: solid chartreuse 3px; */
+  /* background: aqua; */
+
+  transition: opacity 1s;
 }
